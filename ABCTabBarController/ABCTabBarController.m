@@ -23,7 +23,7 @@
 #import "ABCTabBarController.h"
 #import "APPChildViewController.h"
 
-@interface ABCTabBarController () <MDTabBarDelegate, UIPageViewControllerDelegate, UIPageViewControllerDataSource, UIScrollViewDelegate>
+@interface ABCTabBarController () <ABCTabBarDelegate, UIPageViewControllerDelegate, UIPageViewControllerDataSource, UIScrollViewDelegate>
 
 @property (nonatomic, strong) UIPageViewController *pageController;
 @property (nonatomic, strong) NSArray *viewControllers;
@@ -232,6 +232,12 @@
         [_pageController setDelegate:self];
         [_pageController setDataSource:self];
         [_pageController.view setBackgroundColor:[UIColor redColor]];
+        
+        for (UIView *view in _pageController.view.subviews) {
+            if ([view isKindOfClass:[UIScrollView class]]) {
+                [(UIScrollView *)view setDelegate:self];
+            }
+        }
     }
     return _pageController;
 }

@@ -27,9 +27,9 @@
 
 @class ABCTabBar;
 
-@protocol MDTabBarDelegate <NSObject>
-- (void)tabBar:(ABCTabBar *)tabBar
-    didChangeSelectedIndex:(NSUInteger)selectedIndex;
+@protocol ABCTabBarDelegate <NSObject>
+
+- (void)tabBar:(ABCTabBar *)tabBar didChangeSelectedIndex:(NSUInteger)selectedIndex;
 
 @end
 
@@ -42,7 +42,7 @@
 
 @property(nonatomic) UIFont *textFont;
 @property(nonatomic) NSUInteger selectedIndex;
-@property(nonatomic, weak) id<MDTabBarDelegate> delegate;
+@property(nonatomic, weak) id<ABCTabBarDelegate> delegate;
 @property(nonatomic, readonly) NSInteger numberOfItems;
 
 - (void)setItems:(NSArray *)items;

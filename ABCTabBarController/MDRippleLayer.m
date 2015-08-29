@@ -30,7 +30,8 @@
 #define kMDRippleTransparent 0.5f
 #define kMDBackgroundTransparent 0.3f
 #define kMDElevationOffset 6
-#define kMDClearEffectDuration 0.3f;
+
+const float kMDClearEffectDuration = 0.3f;
 
 @interface MDRippleLayer () <MDTouchGestureRecognizerDelegate>
 
@@ -310,62 +311,52 @@
 }
 
 - (void)startRippleEffect:(CGPoint)touchLocation {
-  float time = (_rippleLayer.bounds.size.width) / _effectSpeed;
-  [_rippleLayer removeAllAnimations];
-  [_backgroundLayer removeAllAnimations];
-  [self removeAllAnimations];
-  [_superLayer removeAllAnimations];
-
-  CABasicAnimation *scaleAnim =
-      [CABasicAnimation animationWithKeyPath:@"transform.scale"];
-  scaleAnim.fromValue = [NSNumber numberWithFloat:0];
-  scaleAnim.toValue = [NSNumber numberWithFloat:1];
-  scaleAnim.duration = time;
-  scaleAnim.timingFunction =
-      [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
-  CABasicAnimation *moveAnim =
-      [CABasicAnimation animationWithKeyPath:@"position"];
-  moveAnim.fromValue = [NSValue valueWithCGPoint:touchLocation];
-  moveAnim.toValue =
-      [NSValue valueWithCGPoint:CGPointMake(CGRectGetMidX(_superLayer.bounds), CGRectGetMidY(_superLayer.bounds))];
-  moveAnim.duration = time;
-  moveAnim.timingFunction =
-      [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
-
-  scaleAnim.delegate = self;
-  _effectIsRunning = true;
-  _rippleLayer.opacity = 1;
-  _backgroundLayer.opacity = 1;
-
-  [_rippleLayer addAnimation:moveAnim forKey:kMDPositionAnimationKey];
-  [_rippleLayer addAnimation:scaleAnim forKey:kMDScaleAnimationKey];
+    float time = (_rippleLayer.bounds.size.width) / _effectSpeed;
+    [_rippleLayer removeAllAnimations];
+    [_backgroundLayer removeAllAnimations];
+    [self removeAllAnimations];
+    [_superLayer removeAllAnimations];
+    
+    CABasicAnimation *scaleAnimation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
+    [scaleAnimation setDelegate:self];
+    [scaleAnimation setFromValue:[NSNumber numberWithFloat:0]];
+    [scaleAnimation setToValue:[NSNumber numberWithFloat:1]];
+    [scaleAnimation setDuration:time];
+    [scaleAnimation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn]];
+    
+    CABasicAnimation *moveAnimation = [CABasicAnimation animationWithKeyPath:@"position"];
+    [moveAnimation setFromValue:[NSValue valueWithCGPoint:touchLocation]];
+    [moveAnimation setToValue:[NSValue valueWithCGPoint:CGPointMake(CGRectGetMidX(_superLayer.bounds), CGRectGetMidY(_superLayer.bounds))]];
+    [moveAnimation setDuration:time];
+    [moveAnimation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn]];
+    
+    _effectIsRunning = true;
+    _rippleLayer.opacity = 1;
+    _backgroundLayer.opacity = 1;
+    
+    [_rippleLayer addAnimation:moveAnimation forKey:kMDPositionAnimationKey];
+    [_rippleLayer addAnimation:scaleAnimation forKey:kMDScaleAnimationKey];
 }
 
 - (void)startShadowEffect {
-  CABasicAnimation *radiusAnimation =
-      [CABasicAnimation animationWithKeyPath:@"shadowRadius"];
-  radiusAnimation.fromValue = [NSNumber numberWithFloat:_restingElevation / 4];
-  radiusAnimation.toValue =
-      [NSNumber numberWithFloat:(_restingElevation + kMDElevationOffset) / 4];
+    
+    CABasicAnimation *radiusAnimation = [CABasicAnimation animationWithKeyPath:@"shadowRadius"];
+    [radiusAnimation setFromValue:[NSNumber numberWithFloat:_restingElevation / 4]];
+    [radiusAnimation setToValue:[NSNumber numberWithFloat:(_restingElevation + kMDElevationOffset) / 4]];
+    
+    CABasicAnimation *offsetAnimation = [CABasicAnimation animationWithKeyPath:@"shadowOffset"];
+    [offsetAnimation setFromValue:[NSValue valueWithCGSize:CGSizeMake(0, _restingElevation / 4 + 0.5)]];
+    [offsetAnimation setToValue:[NSValue valueWithCGSize:CGSizeMake(0,(_restingElevation + kMDElevationOffset) / 4)]];
+    
+    CAAnimationGroup *groupAnimation = [CAAnimationGroup animation];
+    [groupAnimation setDuration:kMDClearEffectDuration];
+    [groupAnimation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn]];
+    [groupAnimation setRemovedOnCompletion:NO];
+    [groupAnimation setFillMode:kCAFillModeForwards];
 
-  CABasicAnimation *offsetAnimation =
-      [CABasicAnimation animationWithKeyPath:@"shadowOffset"];
-  offsetAnimation.fromValue =
-      [NSValue valueWithCGSize:CGSizeMake(0, _restingElevation / 4 + 0.5)];
-  offsetAnimation.toValue = [NSValue
-      valueWithCGSize:CGSizeMake(0,
-                                 (_restingElevation + kMDElevationOffset) / 4)];
-
-  CAAnimationGroup *groupAnimation = [CAAnimationGroup animation];
-  groupAnimation.duration = kMDClearEffectDuration;
-  groupAnimation.timingFunction =
-      [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
-  groupAnimation.removedOnCompletion = false;
-  groupAnimation.fillMode = kCAFillModeForwards;
-
-  groupAnimation.animations =
-      [NSArray arrayWithObjects:radiusAnimation, offsetAnimation, nil];
-  [_superLayer addAnimation:groupAnimation forKey:kMDShadowAnimationKey];
+    [groupAnimation setAnimations:[NSArray arrayWithObjects:radiusAnimation, offsetAnimation, nil]];
+    
+    [_superLayer addAnimation:groupAnimation forKey:kMDShadowAnimationKey];
 }
 
 - (void)setMaskLayerCornerRadius:(CGFloat)cornerRadius {

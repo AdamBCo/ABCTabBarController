@@ -259,10 +259,13 @@
         ExampleViewController *childViewControllerOne = [[ExampleViewController alloc] init];
         [childViewControllerOne setIndex:1];
         UINavigationController *navigationOne = [[UINavigationController alloc] initWithRootViewController:childViewControllerOne];
+        [navigationOne.navigationBar setBarTintColor:[UIColor redColor]];
         
         ExampleViewController *childViewControllerTwo = [[ExampleViewController alloc] init];
         [childViewControllerTwo setIndex:2];
         UINavigationController *navigationTwo = [[UINavigationController alloc] initWithRootViewController:childViewControllerTwo];
+        [navigationTwo.navigationBar setBarTintColor:[UIColor greenColor]];
+
 
         
         ExampleViewController *childViewControllerThree = [[ExampleViewController alloc] init];

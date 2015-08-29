@@ -28,7 +28,6 @@
 
 #define kMDContentHorizontalPaddingIPad 24
 #define kMDContentHorizontalPaddingIPhone 12
-#define kMDTabBarHorizontalInset 8
 
 @interface ABCTabBar ()
 
@@ -75,8 +74,8 @@
 
 - (void)layoutSubviews {
   [super layoutSubviews];
-  self.scrollView.frame = CGRectMake(0, 0, self.bounds.size.width, kMDTabBarHeight);
-  [self.scrollView setContentInset:UIEdgeInsetsMake(0, kMDTabBarHorizontalInset, 0, kMDTabBarHorizontalInset)];
+  self.scrollView.frame = CGRectMake(0, 0, [UIScreen mainScreen].applicationFrame.size.width, kMDTabBarHeight);
+  [self.scrollView setContentInset:UIEdgeInsetsMake(0, 0, 0, 0)];
   [self.scrollView setContentSize:self.segmentedControl.bounds.size];
 }
 
@@ -128,26 +127,27 @@
   }
 }
 
-- (void)scrollToSelectedIndex {
-  CGRect frame = [self.segmentedControl getSelectedSegmentFrame];
-  CGFloat contentOffset = frame.origin.x + kMDTabBarHorizontalInset -
-                          (self.frame.size.width - frame.size.width) / 2;
-  if (contentOffset > self.scrollView.contentSize.width + kMDTabBarHorizontalInset -
-                          self.frame.size.width) {
-    contentOffset = self.scrollView.contentSize.width + kMDTabBarHorizontalInset -
-                    self.frame.size.width;
-  } else if (contentOffset < -kMDTabBarHorizontalInset) {
-    contentOffset = -kMDTabBarHorizontalInset;
-  }
-
-  [self.scrollView setContentOffset:CGPointMake(contentOffset, 0) animated:YES];
-}
+//- (void)scrollToSelectedIndex {
+////  CGRect frame = [self.segmentedControl getSelectedSegmentFrame];
+////  CGFloat contentOffset = frame.origin.x -
+////                          (self.frame.size.width - frame.size.width) / 2;
+////  if (contentOffset > self.scrollView.contentSize.width -
+////                          self.frame.size.width) {
+////    contentOffset = self.scrollView.contentSize.width -
+////                    self.frame.size.width;
+////  }
+////  else if (contentOffset < -kMDTabBarHorizontalInset) {
+////    contentOffset = -kMDTabBarHorizontalInset;
+////  }
+//
+////  [self.scrollView setContentOffset:CGPointMake(contentOffset, 0) animated:YES];
+//}
 
 #pragma mark Public methods
 
 - (void)updateSelectedIndex:(NSInteger)selectedIndex {
   _selectedIndex = selectedIndex;
-  [self scrollToSelectedIndex];
+//  [self scrollToSelectedIndex];
   if (_delegate) {
     [_delegate tabBar:self didChangeSelectedIndex:_selectedIndex];
   }
@@ -155,6 +155,7 @@
 
 - (void)setItems:(NSArray *)items {
   [self.segmentedControl removeAllSegments];
+
   NSUInteger index = 0;
   for (id item in items) {
     [self insertItem:item atIndex:index animated:NO];
@@ -166,13 +167,13 @@
 
 - (void)insertItem:(id)item atIndex:(NSUInteger)index animated:(BOOL)animated {
   if ([item isKindOfClass:[NSString class]]) {
-    [self.segmentedControl insertSegmentWithTitle:item
-                                     atIndex:index
-                                    animated:animated];
+      
+    [self.segmentedControl insertSegmentWithTitle:item atIndex:index animated:animated];
+      
   } else if ([item isKindOfClass:[UIImage class]]) {
-    [self.segmentedControl insertSegmentWithImage:item
-                                     atIndex:index
-                                    animated:animated];
+      
+    [self.segmentedControl insertSegmentWithImage:item atIndex:index animated:animated];
+      
   }
 }
 
@@ -225,7 +226,7 @@
     _selectedIndex = selectedIndex;
     if (self.segmentedControl.selectedSegmentIndex != _selectedIndex) {
       [self.segmentedControl setSelectedSegmentIndex:_selectedIndex];
-      [self scrollToSelectedIndex];
+//      [self scrollToSelectedIndex];
     }
   }
 }

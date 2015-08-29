@@ -262,55 +262,48 @@ const float kMDClearEffectDuration = 0.3f;
 }
 
 - (void)clearEffects {
-  _rippleLayer.timeOffset = 0;
-  _rippleLayer.speed = 1;
-
-  if (_enableRipple) {
-    CABasicAnimation *opacityAnim =
-        [CABasicAnimation animationWithKeyPath:@"opacity"];
-    opacityAnim.fromValue = @(1.0f);
-    opacityAnim.toValue = @(0.0f);
-    opacityAnim.duration = kMDClearEffectDuration;
-    opacityAnim.timingFunction =
-        [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
-    opacityAnim.removedOnCompletion = false;
-    opacityAnim.fillMode = kCAFillModeForwards;
-
-    [_rippleLayer removeAllAnimations];
-    [_backgroundLayer removeAllAnimations];
-
-    [self removeAllAnimations];
-    [self addAnimation:opacityAnim forKey:@"opacityAnim"];
-  }
-
-  if (_enableElevation) {
-    CABasicAnimation *radiusAnimation =
-        [CABasicAnimation animationWithKeyPath:@"shadowRadius"];
-    radiusAnimation.fromValue = @((_restingElevation + kMDElevationOffset) / 4);
-    radiusAnimation.toValue = @(_restingElevation / 4);
-
-    CABasicAnimation *offsetAnimation =
-        [CABasicAnimation animationWithKeyPath:@"shadowOffset"];
-    offsetAnimation.fromValue = [NSValue
-        valueWithCGSize:CGSizeMake(0, (_restingElevation + kMDElevationOffset) /
-                                          4)];
-    offsetAnimation.toValue =
-        [NSValue valueWithCGSize:CGSizeMake(0, _restingElevation / 4 + 0.5)];
-
-    CAAnimationGroup *groupAnimation = [CAAnimationGroup animation];
-    groupAnimation.duration = kMDClearEffectDuration;
-    groupAnimation.timingFunction =
-        [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
-    groupAnimation.removedOnCompletion = false;
-    groupAnimation.fillMode = kCAFillModeForwards;
-
-    groupAnimation.animations =
-        [NSArray arrayWithObjects:radiusAnimation, offsetAnimation, nil];
-    [_superLayer addAnimation:groupAnimation forKey:kMDShadowAnimationKey];
-  }
+    _rippleLayer.timeOffset = 0;
+    _rippleLayer.speed = 1;
+    
+    if (_enableRipple) {
+      CABasicAnimation *opacityAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];
+      [opacityAnimation setFromValue:@(1.0f)];
+      [opacityAnimation setToValue:@(0.0f)];
+      [opacityAnimation setDuration:kMDClearEffectDuration];
+      [opacityAnimation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut]];
+      [opacityAnimation setRemovedOnCompletion:NO];
+      [opacityAnimation setFillMode:kCAFillModeForwards];
+      
+      [_rippleLayer removeAllAnimations];
+      [_backgroundLayer removeAllAnimations];
+      [self removeAllAnimations];
+      
+      [self addAnimation:opacityAnimation forKey:@"opacityAnim"];
+    }
+    
+    if (_enableElevation) {
+      CABasicAnimation *radiusAnimation = [CABasicAnimation animationWithKeyPath:@"shadowRadius"];
+      [radiusAnimation setFromValue:@((_restingElevation + kMDElevationOffset) / 4)];
+      [radiusAnimation setToValue:@(_restingElevation / 4)];
+      
+      CABasicAnimation *offsetAnimation = [CABasicAnimation animationWithKeyPath:@"shadowOffset"];
+      [offsetAnimation setFromValue:[NSValue valueWithCGSize:CGSizeMake(0, (_restingElevation + kMDElevationOffset) /4)]];
+      [offsetAnimation setToValue:[NSValue valueWithCGSize:CGSizeMake(0, _restingElevation / 4 + 0.5)]];
+      
+      CAAnimationGroup *groupAnimation = [CAAnimationGroup animation];
+      [groupAnimation setDuration:kMDClearEffectDuration];
+      [groupAnimation setTimingFunction:[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn]];
+      [groupAnimation setRemovedOnCompletion:NO];
+      [groupAnimation setFillMode:kCAFillModeForwards];
+      
+      [groupAnimation setAnimations:[NSArray arrayWithObjects:radiusAnimation, offsetAnimation, nil]];
+      
+      [_superLayer addAnimation:groupAnimation forKey:kMDShadowAnimationKey];
+    }
 }
 
 - (void)startRippleEffect:(CGPoint)touchLocation {
+    
     float time = (_rippleLayer.bounds.size.width) / _effectSpeed;
     [_rippleLayer removeAllAnimations];
     [_backgroundLayer removeAllAnimations];

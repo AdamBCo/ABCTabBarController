@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		873CAE671B92136F0068E7E8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 873CAE661B92136F0068E7E8 /* main.m */; };
 		873CAE6A1B92136F0068E7E8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 873CAE691B92136F0068E7E8 /* AppDelegate.m */; };
-		873CAE701B92136F0068E7E8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873CAE6E1B92136F0068E7E8 /* Main.storyboard */; };
 		873CAE721B92136F0068E7E8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 873CAE711B92136F0068E7E8 /* Images.xcassets */; };
 		873CAE751B92136F0068E7E8 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 873CAE731B92136F0068E7E8 /* LaunchScreen.xib */; };
 		873CAE811B92136F0068E7E8 /* ABCTabBarControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 873CAE801B92136F0068E7E8 /* ABCTabBarControllerTests.m */; };
@@ -18,7 +17,6 @@
 		873CAEA21B9214130068E7E8 /* APPChildViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 873CAE8F1B9214130068E7E8 /* APPChildViewController.m */; };
 		873CAEA31B9214130068E7E8 /* ABCTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 873CAE911B9214130068E7E8 /* ABCTabBar.m */; };
 		873CAEA41B9214130068E7E8 /* MDRippleLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 873CAE931B9214130068E7E8 /* MDRippleLayer.m */; };
-		873CAEAA1B9214130068E7E8 /* UIViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 873CAE9F1B9214130068E7E8 /* UIViewHelper.m */; };
 		873CAEAD1B9218A20068E7E8 /* ABCSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 873CAEAC1B9218A20068E7E8 /* ABCSegmentedControl.m */; };
 /* End PBXBuildFile section */
 
@@ -38,7 +36,6 @@
 		873CAE661B92136F0068E7E8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		873CAE681B92136F0068E7E8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		873CAE691B92136F0068E7E8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		873CAE6F1B92136F0068E7E8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		873CAE711B92136F0068E7E8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		873CAE741B92136F0068E7E8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		873CAE7A1B92136F0068E7E8 /* ABCTabBarControllerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ABCTabBarControllerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -54,8 +51,6 @@
 		873CAE911B9214130068E7E8 /* ABCTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABCTabBar.m; sourceTree = "<group>"; };
 		873CAE921B9214130068E7E8 /* MDRippleLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDRippleLayer.h; sourceTree = "<group>"; };
 		873CAE931B9214130068E7E8 /* MDRippleLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDRippleLayer.m; sourceTree = "<group>"; };
-		873CAE9E1B9214130068E7E8 /* UIViewHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIViewHelper.h; sourceTree = "<group>"; };
-		873CAE9F1B9214130068E7E8 /* UIViewHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIViewHelper.m; sourceTree = "<group>"; };
 		873CAEAB1B9218A20068E7E8 /* ABCSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABCSegmentedControl.h; sourceTree = "<group>"; };
 		873CAEAC1B9218A20068E7E8 /* ABCSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABCSegmentedControl.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -113,9 +108,6 @@
 				873CAEAC1B9218A20068E7E8 /* ABCSegmentedControl.m */,
 				873CAE921B9214130068E7E8 /* MDRippleLayer.h */,
 				873CAE931B9214130068E7E8 /* MDRippleLayer.m */,
-				873CAE9E1B9214130068E7E8 /* UIViewHelper.h */,
-				873CAE9F1B9214130068E7E8 /* UIViewHelper.m */,
-				873CAE6E1B92136F0068E7E8 /* Main.storyboard */,
 				873CAE711B92136F0068E7E8 /* Images.xcassets */,
 				873CAE731B92136F0068E7E8 /* LaunchScreen.xib */,
 				873CAE641B92136F0068E7E8 /* Supporting Files */,
@@ -229,7 +221,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				873CAE701B92136F0068E7E8 /* Main.storyboard in Resources */,
 				873CAE751B92136F0068E7E8 /* LaunchScreen.xib in Resources */,
 				873CAE721B92136F0068E7E8 /* Images.xcassets in Resources */,
 			);
@@ -252,7 +243,6 @@
 				873CAEA11B9214130068E7E8 /* ABCTabBarController.m in Sources */,
 				873CAEAD1B9218A20068E7E8 /* ABCSegmentedControl.m in Sources */,
 				873CAEA01B9214130068E7E8 /* MDTouchGestureRecognizer.m in Sources */,
-				873CAEAA1B9214130068E7E8 /* UIViewHelper.m in Sources */,
 				873CAE6A1B92136F0068E7E8 /* AppDelegate.m in Sources */,
 				873CAEA41B9214130068E7E8 /* MDRippleLayer.m in Sources */,
 				873CAE671B92136F0068E7E8 /* main.m in Sources */,
@@ -280,14 +270,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		873CAE6E1B92136F0068E7E8 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				873CAE6F1B92136F0068E7E8 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		873CAE731B92136F0068E7E8 /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (

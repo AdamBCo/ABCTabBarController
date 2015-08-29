@@ -170,7 +170,7 @@
     CGFloat segmentedControlWidth = 0;
     
     for (int i = 0; i < self.numberOfSegments; i++) {
-        [self setWidth:[UIScreen mainScreen].applicationFrame.size.width/5 forSegmentAtIndex:i];
+        [self setWidth:self.frame.size.width/self.numberOfSegments forSegmentAtIndex:i];
     }
     
     CGFloat holderWidth =
@@ -228,6 +228,7 @@
         if ((index >= self.numberOfSegments) || (index >= _tabs.count)) {
             return;
         }
+        
         frame = ((UIView *)_tabs[index]).frame;
     }
     
@@ -247,9 +248,7 @@
             
             if (!hasRipple) {
                 MDRippleLayer *layer = [[MDRippleLayer alloc] initWithSuperView:view];
-                [layer setEffectColor:_rippleColor
-                      withRippleAlpha:.1f
-                      backgroundAlpha:.1f];
+                [layer setEffectColor:_rippleColor withRippleAlpha:.1f backgroundAlpha:.1f];
                 layer.enableElevation = NO;
                 layer.rippleScaleRatio = 1;
             }

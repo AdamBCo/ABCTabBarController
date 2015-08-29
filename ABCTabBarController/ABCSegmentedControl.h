@@ -12,7 +12,7 @@
 
 @interface ABCSegmentedControl : UISegmentedControl
 
-@property(nonatomic, strong) UIView *indicatorView;
+@property(nonatomic) UIView *indicatorView;
 @property(nonatomic) UIColor *rippleColor;
 @property(nonatomic) UIColor *indicatorColor;
 @property(nonatomic) NSMutableArray *tabs;

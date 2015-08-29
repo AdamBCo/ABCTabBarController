@@ -22,7 +22,6 @@
 
 #import "MDRippleLayer.h"
 #import "MDTouchGestureRecognizer.h"
-#import "UIViewHelper.h"
 
 #define kMDScaleAnimationKey @"scale"
 #define kMDPositionAnimationKey @"position"
@@ -328,7 +327,7 @@
       [CABasicAnimation animationWithKeyPath:@"position"];
   moveAnim.fromValue = [NSValue valueWithCGPoint:touchLocation];
   moveAnim.toValue =
-      [NSValue valueWithCGPoint:CGRectCenter(_superLayer.bounds)];
+      [NSValue valueWithCGPoint:CGPointMake(CGRectGetMidX(_superLayer.bounds), CGRectGetMidY(_superLayer.bounds))];
   moveAnim.duration = time;
   moveAnim.timingFunction =
       [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
@@ -378,7 +377,7 @@
 - (void)calculateRippleSize {
   CGFloat superLayerWidth = CGRectGetWidth(_superLayer.bounds);
   CGFloat superLayerHeight = CGRectGetHeight(_superLayer.bounds);
-  CGPoint center = CGRectCenter(_superLayer.bounds);
+    CGPoint center = CGPointMake(CGRectGetMidX(_superLayer.bounds), CGRectGetMidY(_superLayer.bounds));
   CGFloat circleDiameter =
       sqrtf(powf(superLayerWidth, 2) + powf(superLayerHeight, 2)) *
       _rippleScaleRatio;

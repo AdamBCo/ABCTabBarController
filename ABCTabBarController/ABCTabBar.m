@@ -67,29 +67,25 @@
 
 #pragma mark Private methods
 - (void)initContent {
-  self.segmentedControl = [[ABCSegmentedControl alloc] initWithTabBar:self];
-  [self.segmentedControl setTintColor:[UIColor clearColor]];
+    self.segmentedControl = [[ABCSegmentedControl alloc] initWithTabBar:self];
+    [self.segmentedControl setTintColor:[UIColor clearColor]];
+    [self addSubview:self.scrollView];
+    
+    [self.layer setShadowColor:[UIColor blackColor].CGColor];
+    [self.layer setShadowRadius:1];
+    [self.layer setShadowOpacity:0.5];
+    [self.layer setShadowOffset:CGSizeMake(0, 1.5)];
 
-  [self addSubview:self.scrollView];
-
-  self.layer.shadowColor = [UIColor blackColor].CGColor;
-  self.layer.shadowRadius = 1;
-  self.layer.shadowOpacity = .5;
-  self.layer.shadowOffset = CGSizeMake(0, 1.5);
-
-  [self setTextColor:[UIColor whiteColor]];
-  [self setTextFont:[UIFont systemFontOfSize:12]];
-  [self setIndicatorColor:[UIColor whiteColor]];
-  [self setRippleColor:[UIColor whiteColor]];
+    [self setTextColor:[UIColor whiteColor]];
+    [self setTextFont:[UIFont systemFontOfSize:12]];
+    [self setIndicatorColor:[UIColor whiteColor]];
+    [self setRippleColor:[UIColor whiteColor]];
 }
 
 - (void)willMoveToSuperview:(UIView *)newSuperview {
   [super willMoveToSuperview:newSuperview];
   if (newSuperview) {
-    [self.segmentedControl addObserver:self
-                       forKeyPath:@"frame"
-                          options:0
-                          context:nil];
+      [self.segmentedControl addObserver:self forKeyPath:@"frame" options:0 context:nil];
   }
 }
 
@@ -98,55 +94,51 @@
   [super removeFromSuperview];
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary *)change
-                       context:(void *)context {
-  if (object == self.segmentedControl && [keyPath isEqualToString:@"frame"]) {
-    [self.scrollView setContentSize:self.segmentedControl.bounds.size];
-  }
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if (object == self.segmentedControl && [keyPath isEqualToString:@"frame"]) {
+        [self.scrollView setContentSize:self.segmentedControl.bounds.size];
+    }
 }
 
 - (void)updateItemAppearance {
-  if (_textColor && _textFont) {
-    [self.segmentedControl setTextFont:_textFont withColor:_textColor];
-  }
+    if (_textColor && _textFont) {
+        [self.segmentedControl setTextFont:_textFont withColor:_textColor];
+    }
 }
 
 - (void)scrollToSelectedIndex {
-  CGRect frame = [self.segmentedControl getSelectedSegmentFrame];
-  CGFloat contentOffset = frame.origin.x + kMDTabBarHorizontalInset -
-                          (self.frame.size.width - frame.size.width) / 2;
-  if (contentOffset > self.scrollView.contentSize.width + kMDTabBarHorizontalInset -
-                          self.frame.size.width) {
-    contentOffset = self.scrollView.contentSize.width + kMDTabBarHorizontalInset -
-                    self.frame.size.width;
-  } else if (contentOffset < -kMDTabBarHorizontalInset) {
-    contentOffset = -kMDTabBarHorizontalInset;
-  }
-
-  [self.scrollView setContentOffset:CGPointMake(contentOffset, 0) animated:YES];
+    CGRect frame = [self.segmentedControl getSelectedSegmentFrame];
+    CGFloat contentOffset = frame.origin.x + kMDTabBarHorizontalInset - (self.frame.size.width - frame.size.width) / 2;
+    
+    if (contentOffset > self.scrollView.contentSize.width + kMDTabBarHorizontalInset - self.frame.size.width) {
+        contentOffset = self.scrollView.contentSize.width + kMDTabBarHorizontalInset -self.frame.size.width;
+    } else if (contentOffset < -kMDTabBarHorizontalInset) {
+        contentOffset = -kMDTabBarHorizontalInset;
+    }
+    
+    [self.scrollView setContentOffset:CGPointMake(contentOffset, 0) animated:YES];
 }
 
-#pragma mark Public methods
+#pragma mark - Public methods
 
 - (void)updateSelectedIndex:(NSInteger)selectedIndex {
-  _selectedIndex = selectedIndex;
-  [self scrollToSelectedIndex];
-  if (_delegate) {
-    [_delegate tabBar:self didChangeSelectedIndex:_selectedIndex];
-  }
+    _selectedIndex = selectedIndex;
+    [self scrollToSelectedIndex];
+    
+    if (_delegate) {
+        [_delegate tabBar:self didChangeSelectedIndex:_selectedIndex];
+    }
 }
 
 - (void)setItems:(NSArray *)items {
-  [self.segmentedControl removeAllSegments];
-  NSUInteger index = 0;
-  for (id item in items) {
-    [self insertItem:item atIndex:index animated:NO];
-    index++;
-  }
-
-  self.selectedIndex = 0;
+    [self.segmentedControl removeAllSegments];
+    NSUInteger index = 0;
+    for (id item in items) {
+        [self insertItem:item atIndex:index animated:NO];
+        index++;
+    }
+    
+    self.selectedIndex = 0;
 }
 
 - (void)insertItem:(id)item atIndex:(NSUInteger)index animated:(BOOL)animated {

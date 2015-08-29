@@ -57,6 +57,4 @@
 
 - (void)moveIndicatorToFrame:(CGRect)frame withAnimated:(BOOL)animated;
 
-- (void)updateSelectedIndex:(NSInteger)selectedIndex;
-
 @end

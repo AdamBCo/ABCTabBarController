@@ -22,9 +22,9 @@
         self.indicatorView = [[UIView alloc]initWithFrame:CGRectMake(0, kMDTabBarHeight - kMDIndicatorHeight, 0,kMDIndicatorHeight)];
         self.indicatorView.tag = NSIntegerMax;
         [self addSubview:self.indicatorView];
-        
-        
-        [self addTarget:self action:@selector(selectionChanged:) forControlEvents:UIControlEventValueChanged];    }
+        [self addTarget:self
+                 action:@selector(selectionChanged:)
+       forControlEvents:UIControlEventValueChanged];    }
     
     return self;
 }
@@ -44,11 +44,9 @@
     [self moveIndicatorToSelectedIndexWithAnimated:YES];
 }
 
-- (void)selectionChanged:(UISegmentedControl *)sender {
-
-    
+- (void)selectionChanged:(id)sender {
     [self moveIndicatorToSelectedIndexWithAnimated:YES];
-    [self.tabBar updateSelectedIndex:self.selectedSegmentIndex];
+//    [self.tabBar updateSelectedIndex:self.selectedSegmentIndex];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
@@ -63,7 +61,9 @@
 
 #pragma mark Override Methods
 
-- (void)insertSegmentWithImage:(UIImage *)image atIndex:(NSUInteger)segment  animated:(BOOL)animated {
+- (void)insertSegmentWithImage:(UIImage *)image
+                       atIndex:(NSUInteger)segment
+                      animated:(BOOL)animated {
     [super insertSegmentWithImage:image atIndex:segment animated:animated];
     [self resizeItems];
     [self updateSegmentsList];
@@ -121,7 +121,9 @@
     for (UIView *view in self.subviews) {
         for (CALayer *layer in view.layer.sublayers) {
             if ([layer isKindOfClass:[MDRippleLayer class]]) {
-                [((MDRippleLayer *)layer)setEffectColor:_rippleColor withRippleAlpha:.1f backgroundAlpha:.1f];
+                [((MDRippleLayer *)layer)setEffectColor:_rippleColor
+                                        withRippleAlpha:.1f
+                                        backgroundAlpha:.1f];
                 return;
             }
         }
@@ -169,10 +171,11 @@
     CGFloat segmentedControlWidth = 0;
     
     for (int i = 0; i < self.numberOfSegments; i++) {
-        [self setWidth:[UIScreen mainScreen].applicationFrame.size.width/self.numberOfSegments forSegmentAtIndex:i];
+        [self setWidth:[UIScreen mainScreen].applicationFrame.size.width/5 forSegmentAtIndex:i];
     }
     
-    CGFloat holderWidth = self.superview.bounds.size.width;
+    CGFloat holderWidth =
+    self.superview.bounds.size.width - 8 * 2;
     if (segmentedControlWidth < holderWidth) {
         if (self.numberOfSegments * maxItemSize < holderWidth) {
             maxItemSize = holderWidth / self.numberOfSegments;

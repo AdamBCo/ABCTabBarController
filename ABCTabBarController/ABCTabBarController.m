@@ -47,6 +47,29 @@
     [self.pageController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
     [self addChildViewController:self.pageController];
     [self.pageController didMoveToParentViewController:self];
+
+//  // first view controller
+//  id viewController =
+//      [self.delegate tabBarViewController:self
+//                    viewControllerAtIndex:self.tabBar.selectedIndex];
+//  [viewControllers
+//      setObject:viewController
+//         forKey:[NSNumber numberWithInteger:self.tabBar.selectedIndex]];
+
+//  __unsafe_unretained typeof(self) weakSelf = self;
+//  [self.pageController
+//      setViewControllers:@[ viewController ]
+//               direction:UIPageViewControllerNavigationDirectionForward
+//                animated:NO
+//              completion:^(BOOL finished) {
+//                if ([weakSelf->_delegate
+//                        respondsToSelector:@selector(tabBarViewController:
+//                                                           didMoveToIndex:)]) {
+//                  [weakSelf->_delegate
+//                      tabBarViewController:weakSelf
+//                            didMoveToIndex:weakSelf->_tabBar.selectedIndex];
+//                }
+//              }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -64,9 +87,9 @@
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController {
     
     NSInteger index = [self.viewControllers indexOfObject: viewController];
-    if(index == 0) {
+    if(index == 0)
         return nil;
-    }else {
+    else {
         return  index == 0  ?  [self.viewControllers lastObject]  :  self.viewControllers[index - 1];
     }
     
@@ -75,11 +98,10 @@
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController {
     
     NSUInteger index = [self.viewControllers indexOfObject: viewController];
-    if(index == self.viewControllers.count - 1) {
+    if(index == self.viewControllers.count - 1)
         return nil;
-    } else {
+    else
         return self.viewControllers[(index + 1) % self.viewControllers.count];
-    }
     
 }
 
@@ -95,6 +117,7 @@
 
 
 -(void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed {
+    
     
     NSUInteger index = [self.viewControllers indexOfObject: [pageViewController.viewControllers lastObject]];
     [self.tabBar setSelectedIndex:index];
@@ -112,13 +135,11 @@
 
     NSArray *viewControllers = [NSArray arrayWithObject:viewController];
     
-    UIPageViewControllerNavigationDirection animateDirection;
+      UIPageViewControllerNavigationDirection animateDirection =
+          selectedIndex > lastIndex
+              ? UIPageViewControllerNavigationDirectionForward
+              : UIPageViewControllerNavigationDirectionReverse;
     
-    if (selectedIndex > lastIndex) {
-        animateDirection = UIPageViewControllerNavigationDirectionForward;
-    } else {
-        animateDirection = UIPageViewControllerNavigationDirectionReverse;
-    }
     
     [self.pageController setViewControllers:viewControllers direction:animateDirection animated:NO completion:nil];
     
@@ -134,42 +155,51 @@
 
   CGFloat scrollViewWidth = scrollView.frame.size.width;
 
-  int selectedIndex = (int)self.tabBar.selectedIndex;
+  int selectedIndex = (int)_tabBar.selectedIndex;
 
   if (!disableDragging) {
     float xDriff = offset.x - scrollViewWidth;
-    UIView *selectedTab = (UIView *)[self.tabBar tabs][selectedIndex];
+    UIView *selectedTab = (UIView *)[_tabBar tabs][selectedIndex];
 
     if (offset.x < scrollViewWidth) {
       if (_tabBar.selectedIndex == 0)
         return;
 
-      UIView *leftTab = (UIView *)[self.tabBar tabs][selectedIndex - 1];
+      UIView *leftTab = (UIView *)[_tabBar tabs][selectedIndex - 1];
 
       float widthDiff = selectedTab.frame.size.width - leftTab.frame.size.width;
 
       float newOriginX = selectedTab.frame.origin.x +
                          xDriff / scrollViewWidth * leftTab.frame.size.width;
 
-      float newWidth = selectedTab.frame.size.width + xDriff / scrollViewWidth * widthDiff;
+      float newWidth =
+          selectedTab.frame.size.width + xDriff / scrollViewWidth * widthDiff;
 
-      CGRect frame = CGRectMake(newOriginX, kMDTabBarHeight - kMDIndicatorHeight, newWidth, kMDIndicatorHeight);
-      [self.tabBar moveIndicatorToFrame:frame withAnimated:NO];
+      CGRect frame =
+          CGRectMake(newOriginX, kMDTabBarHeight - kMDIndicatorHeight, newWidth,
+                     kMDIndicatorHeight);
+      [_tabBar moveIndicatorToFrame:frame withAnimated:NO];
 
     } else {
-      if (selectedIndex + 1 >= self.tabBar.numberOfItems)
+      if (selectedIndex + 1 >= _tabBar.numberOfItems)
         return;
 
-      UIView *rightTab = (UIView *)[self.tabBar tabs][selectedIndex + 1];
+      UIView *rightTab = (UIView *)[_tabBar tabs][selectedIndex + 1];
 
-      float widthDiff = rightTab.frame.size.width - selectedTab.frame.size.width;
+      float widthDiff =
+          rightTab.frame.size.width - selectedTab.frame.size.width;
 
-      float newOriginX = selectedTab.frame.origin.x + xDriff / scrollViewWidth * selectedTab.frame.size.width;
+      float newOriginX =
+          selectedTab.frame.origin.x +
+          xDriff / scrollViewWidth * selectedTab.frame.size.width;
 
-      float newWidth = selectedTab.frame.size.width + xDriff / scrollViewWidth * widthDiff;
+      float newWidth =
+          selectedTab.frame.size.width + xDriff / scrollViewWidth * widthDiff;
 
-      CGRect frame = CGRectMake(newOriginX, kMDTabBarHeight - kMDIndicatorHeight, newWidth, kMDIndicatorHeight);
-      [self.tabBar moveIndicatorToFrame:frame withAnimated:NO];
+      CGRect frame =
+          CGRectMake(newOriginX, kMDTabBarHeight - kMDIndicatorHeight, newWidth,
+                     kMDIndicatorHeight);
+      [_tabBar moveIndicatorToFrame:frame withAnimated:NO];
     }
   }
 }
@@ -180,24 +210,11 @@
         _tabBar = [[ABCTabBar alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 48, [UIScreen mainScreen].applicationFrame.size.width, 40)];
         [_tabBar setBackgroundColor:[UIColor blueColor]];
         
-        UIImage *onceActive;
-        
-        //Setting imageWithRenderingMode: to imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal for iOS7 is key
-        if ([UIImage instancesRespondToSelector:@selector(imageWithRenderingMode:)]) {
-            onceActive = [[UIImage imageNamed:@"home_icon"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-
-            
-        }
-        else {
-            onceActive =[UIImage imageNamed:@"home_icon"];
-
-        }
-        
         NSArray *names = @[
-                           onceActive,
-                           @"Cool",
-                           [UIImage imageNamed:@"home_icon"],
-                           [UIImage imageNamed:@"home_icon"]
+                           @"HOME",
+                           @"TRENDING",
+                           @"FAVORITES",
+                           @"SETTINGS"
                            ];
         [_tabBar setItems:names];
         [_tabBar setDelegate:self];
@@ -207,9 +224,11 @@
 
 -(UIPageViewController *)pageController {
     if (!_pageController) {
-        _pageController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
-                                                          navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal
-                                                                        options:nil];
+        _pageController = [[UIPageViewController alloc]
+                          initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
+                          navigationOrientation:
+                          UIPageViewControllerNavigationOrientationHorizontal
+                          options:nil];
         [_pageController setDelegate:self];
         [_pageController setDataSource:self];
         [_pageController.view setBackgroundColor:[UIColor redColor]];

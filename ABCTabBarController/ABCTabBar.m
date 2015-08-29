@@ -30,15 +30,6 @@
 #define kMDContentHorizontalPaddingIPhone 12
 #define kMDTabBarHorizontalInset 8
 
-@interface ABCTabBar ()
-
-@property (nonatomic, strong) ABCSegmentedControl *segmentedControl;
-@property (nonatomic, strong) UIScrollView *scrollView;
-
-
-- (void)updateSelectedIndex:(NSInteger)selectedIndex;
-@end
-
 #pragma mark MDTabBar
 @implementation ABCTabBar
 

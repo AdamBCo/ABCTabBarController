@@ -46,7 +46,7 @@
 
 - (void)selectionChanged:(id)sender {
     [self moveIndicatorToSelectedIndexWithAnimated:YES];
-//    [self.tabBar updateSelectedIndex:self.selectedSegmentIndex];
+    [self.tabBar updateSelectedIndex:self.selectedSegmentIndex];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
@@ -142,8 +142,7 @@
 - (void)setTextFont:(UIFont *)textFont withColor:(UIColor *)textColor {
     font = textFont;
     [self setTitleTextAttributes:@{
-                                   NSForegroundColorAttributeName :
-                                       [textColor colorWithAlphaComponent:0.6],
+                                   NSForegroundColorAttributeName :[textColor colorWithAlphaComponent:0.6],
                                    NSFontAttributeName : textFont
                                    } forState:UIControlStateNormal];
     [self setTitleTextAttributes:@{

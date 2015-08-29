@@ -49,16 +49,14 @@
     [self.pageController didMoveToParentViewController:self];
 
 //  // first view controller
-//  id viewController =
-//      [self.delegate tabBarViewController:self
-//                    viewControllerAtIndex:self.tabBar.selectedIndex];
-//  [viewControllers
-//      setObject:viewController
-//         forKey:[NSNumber numberWithInteger:self.tabBar.selectedIndex]];
-
+//  id viewController =[self.delegate tabBarViewController:self viewControllerAtIndex:self.tabBar.selectedIndex];
+////  [self.viewControllers
+////      setObject:viewController
+////         forKey:[NSNumber numberWithInteger:self.tabBar.selectedIndex]];
+//
 //  __unsafe_unretained typeof(self) weakSelf = self;
 //  [self.pageController
-//      setViewControllers:@[ viewController ]
+//      setViewControllers:viewControllers
 //               direction:UIPageViewControllerNavigationDirectionForward
 //                animated:NO
 //              completion:^(BOOL finished) {
@@ -141,7 +139,7 @@
               : UIPageViewControllerNavigationDirectionReverse;
     
     
-    [self.pageController setViewControllers:viewControllers direction:animateDirection animated:NO completion:nil];
+    [self.pageController setViewControllers:viewControllers direction:animateDirection animated:YES completion:nil];
     
     [self addChildViewController:self.pageController];
     [self.pageController didMoveToParentViewController:self];

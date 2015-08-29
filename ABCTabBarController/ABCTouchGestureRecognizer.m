@@ -20,42 +20,47 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "MDTouchGestureRecognizer.h"
+#import "ABCTouchGestureRecognizer.h"
 
-@implementation MDTouchGestureRecognizer
+@implementation ABCTouchGestureRecognizer
 
 - (instancetype)init {
-  if (self = [super init]) {
-    self.cancelsTouchesInView = false;
-  }
-  return self;
+    if (self = [super init]) {
+        self.cancelsTouchesInView = false;
+    }
+    return self;
 }
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-  if (self.state != UIGestureRecognizerStateBegan) {
-    self.state = UIGestureRecognizerStateBegan;
-    [_touchDelegate touchesBegan:touches withEvent:event];
-  }
+    
+    if (self.state != UIGestureRecognizerStateBegan) {
+        [self setState:UIGestureRecognizerStateBegan];
+        [_touchDelegate touchesBegan:touches withEvent:event];
+    }
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
-  self.state = UIGestureRecognizerStateChanged;
-  [_touchDelegate touchesMoved:touches withEvent:event];
+    
+    [self setState:UIGestureRecognizerStateChanged];
+    
+    [_touchDelegate touchesBegan:touches withEvent:event];
+    
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
-  if (self.state == UIGestureRecognizerStateBegan ||
-      self.state == UIGestureRecognizerStateChanged) {
-    self.state = UIGestureRecognizerStateCancelled;
-  }
-  [_touchDelegate touchesCancelled:touches withEvent:event];
+    
+    if (self.state == UIGestureRecognizerStateBegan || self.state == UIGestureRecognizerStateChanged) {
+        [self setState:UIGestureRecognizerStateCancelled];
+    }
+    
+    [_touchDelegate touchesCancelled:touches withEvent:event];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-  if (self.state == UIGestureRecognizerStateBegan ||
-      self.state == UIGestureRecognizerStateChanged) {
-    self.state = UIGestureRecognizerStateEnded;
-  }
-  [_touchDelegate touchesEnded:touches withEvent:event];
+    if (self.state == UIGestureRecognizerStateBegan || self.state == UIGestureRecognizerStateChanged) {
+        [self setState:UIGestureRecognizerStateEnded];
+    }
+    
+    [_touchDelegate touchesEnded:touches withEvent:event];
 }
 
 @end

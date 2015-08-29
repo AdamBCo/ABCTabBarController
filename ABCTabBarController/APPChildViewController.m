@@ -19,7 +19,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.screenNumber = [[UILabel alloc] initWithFrame:CGRectMake(0, 150, [UIScreen mainScreen].applicationFrame.size.width, 60)];
-    self.screenNumber.text = [NSString stringWithFormat:@"Screen #%ld", (long)self.index];
+    [self.screenNumber setTextAlignment:NSTextAlignmentCenter];
+    self.screenNumber.text = [NSString stringWithFormat:@"ViewController #%ld", (long)self.index];
     [self.view addSubview:self.screenNumber];
     
 }

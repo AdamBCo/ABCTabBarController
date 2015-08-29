@@ -23,15 +23,18 @@
 #import <UIKit/UIKit.h>
 #import <UIKit/UIGestureRecognizerSubclass.h>
 
-@protocol MDTouchGestureRecognizerDelegate <NSObject>
+@protocol ABCTouchGestureRecognizerDelegate <NSObject>
+
 @optional
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event;
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event;
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event;
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event;
+
 @end
 
-@interface MDTouchGestureRecognizer : UIGestureRecognizer
+@interface ABCTouchGestureRecognizer : UIGestureRecognizer
 
-@property(nonatomic, weak) id<MDTouchGestureRecognizerDelegate> touchDelegate;
+@property(nonatomic, weak) id<ABCTouchGestureRecognizerDelegate> touchDelegate;
+
 @end

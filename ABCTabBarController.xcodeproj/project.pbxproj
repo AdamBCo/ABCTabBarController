@@ -12,7 +12,7 @@
 		873CAE721B92136F0068E7E8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 873CAE711B92136F0068E7E8 /* Images.xcassets */; };
 		873CAE751B92136F0068E7E8 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 873CAE731B92136F0068E7E8 /* LaunchScreen.xib */; };
 		873CAE811B92136F0068E7E8 /* ABCTabBarControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 873CAE801B92136F0068E7E8 /* ABCTabBarControllerTests.m */; };
-		873CAEA01B9214130068E7E8 /* MDTouchGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 873CAE8C1B9214130068E7E8 /* MDTouchGestureRecognizer.m */; };
+		873CAEA01B9214130068E7E8 /* ABCTouchGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 873CAE8C1B9214130068E7E8 /* ABCTouchGestureRecognizer.m */; };
 		873CAEA11B9214130068E7E8 /* ABCTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 873CAE8D1B9214130068E7E8 /* ABCTabBarController.m */; };
 		873CAEA21B9214130068E7E8 /* APPChildViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 873CAE8F1B9214130068E7E8 /* APPChildViewController.m */; };
 		873CAEA31B9214130068E7E8 /* ABCTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 873CAE911B9214130068E7E8 /* ABCTabBar.m */; };
@@ -42,8 +42,8 @@
 		873CAE7F1B92136F0068E7E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		873CAE801B92136F0068E7E8 /* ABCTabBarControllerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ABCTabBarControllerTests.m; sourceTree = "<group>"; };
 		873CAE8A1B9214130068E7E8 /* ABCTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABCTabBarController.h; sourceTree = "<group>"; };
-		873CAE8B1B9214130068E7E8 /* MDTouchGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDTouchGestureRecognizer.h; sourceTree = "<group>"; };
-		873CAE8C1B9214130068E7E8 /* MDTouchGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDTouchGestureRecognizer.m; sourceTree = "<group>"; };
+		873CAE8B1B9214130068E7E8 /* ABCTouchGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABCTouchGestureRecognizer.h; sourceTree = "<group>"; };
+		873CAE8C1B9214130068E7E8 /* ABCTouchGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABCTouchGestureRecognizer.m; sourceTree = "<group>"; };
 		873CAE8D1B9214130068E7E8 /* ABCTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABCTabBarController.m; sourceTree = "<group>"; };
 		873CAE8E1B9214130068E7E8 /* APPChildViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APPChildViewController.h; sourceTree = "<group>"; };
 		873CAE8F1B9214130068E7E8 /* APPChildViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APPChildViewController.m; sourceTree = "<group>"; };
@@ -98,8 +98,8 @@
 				873CAE691B92136F0068E7E8 /* AppDelegate.m */,
 				873CAE8A1B9214130068E7E8 /* ABCTabBarController.h */,
 				873CAE8D1B9214130068E7E8 /* ABCTabBarController.m */,
-				873CAE8B1B9214130068E7E8 /* MDTouchGestureRecognizer.h */,
-				873CAE8C1B9214130068E7E8 /* MDTouchGestureRecognizer.m */,
+				873CAE8B1B9214130068E7E8 /* ABCTouchGestureRecognizer.h */,
+				873CAE8C1B9214130068E7E8 /* ABCTouchGestureRecognizer.m */,
 				873CAE8E1B9214130068E7E8 /* APPChildViewController.h */,
 				873CAE8F1B9214130068E7E8 /* APPChildViewController.m */,
 				873CAE901B9214130068E7E8 /* ABCTabBar.h */,
@@ -242,7 +242,7 @@
 			files = (
 				873CAEA11B9214130068E7E8 /* ABCTabBarController.m in Sources */,
 				873CAEAD1B9218A20068E7E8 /* ABCSegmentedControl.m in Sources */,
-				873CAEA01B9214130068E7E8 /* MDTouchGestureRecognizer.m in Sources */,
+				873CAEA01B9214130068E7E8 /* ABCTouchGestureRecognizer.m in Sources */,
 				873CAE6A1B92136F0068E7E8 /* AppDelegate.m in Sources */,
 				873CAEA41B9214130068E7E8 /* MDRippleLayer.m in Sources */,
 				873CAE671B92136F0068E7E8 /* main.m in Sources */,

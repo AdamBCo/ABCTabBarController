@@ -138,7 +138,6 @@
     if (!viewController) {
         viewController = [self.delegate tabBarViewController:self viewControllerAtIndex:selectedIndex];
     }
-
     
     UIPageViewControllerNavigationDirection animateDirection;
     
@@ -150,12 +149,12 @@
     
     __unsafe_unretained typeof(self) weakSelf = self;
     disableDragging = YES;
-    self.pageController.view.userInteractionEnabled = NO;
+    [self.pageController.view setUserInteractionEnabled:NO];
     [self.pageController setViewControllers:@[ viewController ]
                                   direction:animateDirection
                                    animated:YES
                                  completion:^(BOOL finished) {
-                                     weakSelf.pageController.view.userInteractionEnabled = YES;
+                                     [weakSelf.pageController.view setUserInteractionEnabled:YES];
                                      weakSelf->disableDragging = NO;
                                      weakSelf->lastIndex = selectedIndex;
                                      
@@ -224,10 +223,10 @@
         [_tabBar setBackgroundColor:[UIColor blueColor]];
         
         NSArray *names = @[
-                           @"HOME",
-                           @"TRENDING",
-                           @"FAVORITES",
-                           @"SETTINGS"
+                           @"ONE",
+                           @"TWO",
+                           @"THREE",
+                           @"FOUR"
                            ];
         [_tabBar setItems:names];
         [_tabBar setDelegate:self];
@@ -259,19 +258,19 @@
     if (!_viewControllers) {
         
         APPChildViewController *childViewControllerOne = [[APPChildViewController alloc] init];
-        [childViewControllerOne setIndex:0];
+        [childViewControllerOne setIndex:1];
         UINavigationController *navigationOne = [[UINavigationController alloc] initWithRootViewController:childViewControllerOne];
         
         APPChildViewController *childViewControllerTwo = [[APPChildViewController alloc] init];
-        [childViewControllerTwo setIndex:1];
+        [childViewControllerTwo setIndex:2];
         UINavigationController *navigationTwo = [[UINavigationController alloc] initWithRootViewController:childViewControllerTwo];
 
         
         APPChildViewController *childViewControllerThree = [[APPChildViewController alloc] init];
-        [childViewControllerThree setIndex:2];
+        [childViewControllerThree setIndex:3];
         
         APPChildViewController *childViewControllerFour = [[APPChildViewController alloc] init];
-        [childViewControllerThree setIndex:3];
+        [childViewControllerFour setIndex:4];
         UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:childViewControllerFour];
 
 

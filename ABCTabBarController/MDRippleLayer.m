@@ -21,7 +21,7 @@
 // THE SOFTWARE.
 
 #import "MDRippleLayer.h"
-#import "MDTouchGestureRecognizer.h"
+#import "ABCTouchGestureRecognizer.h"
 
 #define kMDScaleAnimationKey @"scale"
 #define kMDPositionAnimationKey @"position"
@@ -33,7 +33,7 @@
 
 const float kMDClearEffectDuration = 0.3f;
 
-@interface MDRippleLayer () <MDTouchGestureRecognizerDelegate>
+@interface MDRippleLayer () <ABCTouchGestureRecognizerDelegate>
 
 @property CALayer *superLayer;
 @property CAShapeLayer *rippleLayer;
@@ -62,8 +62,8 @@ const float kMDClearEffectDuration = 0.3f;
   if (self = [super init]) {
     superView = view;
     _superLayer = superView.layer;
-    MDTouchGestureRecognizer *recognizer =
-        [[MDTouchGestureRecognizer alloc] init];
+    ABCTouchGestureRecognizer *recognizer =
+        [[ABCTouchGestureRecognizer alloc] init];
     recognizer.touchDelegate = self;
     [superView addGestureRecognizer:recognizer];
     [self initContents];
@@ -247,23 +247,22 @@ const float kMDClearEffectDuration = 0.3f;
 }
 
 - (void)enableElevation:(BOOL)enable withResting:(BOOL)resting {
-  if (enable) {
-    CGFloat elevation =
-        resting ? _restingElevation : (_restingElevation + kMDElevationOffset);
-
-    _superLayer.shadowOpacity = 0.5;
-    _superLayer.shadowRadius = elevation / 4;
-    _superLayer.shadowColor = [[UIColor blackColor] CGColor];
-    _superLayer.shadowOffset = CGSizeMake(0, _restingElevation / 4 + 0.5);
-  } else {
-    _superLayer.shadowRadius = 0;
-    _superLayer.shadowOffset = CGSizeMake(0, 0);
-  }
+    
+    if (enable) {
+        CGFloat elevation = resting ? _restingElevation : (_restingElevation + kMDElevationOffset);
+        [_superLayer setShadowOpacity:0.5];
+        [_superLayer setShadowRadius:elevation/4];
+        [_superLayer setShadowColor:[UIColor blackColor].CGColor];
+        [_superLayer setShadowOffset:CGSizeMake(0, _restingElevation / 4 + 0.5)];
+    } else {
+      [_superLayer setShadowRadius:0];
+      [_superLayer setShadowOffset:CGSizeMake(0,0)];
+    }
 }
 
 - (void)clearEffects {
-    _rippleLayer.timeOffset = 0;
-    _rippleLayer.speed = 1;
+    [_rippleLayer setTimeOffset:0];
+    [_rippleLayer setSpeed:1];
     
     if (_enableRipple) {
       CABasicAnimation *opacityAnimation = [CABasicAnimation animationWithKeyPath:@"opacity"];

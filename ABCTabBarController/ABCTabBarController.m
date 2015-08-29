@@ -1,6 +1,7 @@
 // The MIT License (MIT)
 //
-// Copyright (c) 2015 FPT Software
+//  Created by Adam Cooper on 8/29/15.
+//  Copyright (c) 2015 Adam Cooper. All rights reserved.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -236,14 +237,12 @@
 
 -(UIPageViewController *)pageController {
     if (!_pageController) {
-        _pageController = [[UIPageViewController alloc]
-                          initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
-                          navigationOrientation:
-                          UIPageViewControllerNavigationOrientationHorizontal
-                          options:nil];
+        _pageController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
+                                                          navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal
+                                                                        options:nil];
         [_pageController setDelegate:self];
         [_pageController setDataSource:self];
-        [_pageController.view setBackgroundColor:[UIColor redColor]];
+        [_pageController.view setBackgroundColor:[UIColor whiteColor]];
         
         for (UIView *view in _pageController.view.subviews) {
             if ([view isKindOfClass:[UIScrollView class]]) {

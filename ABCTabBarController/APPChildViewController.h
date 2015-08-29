@@ -1,9 +1,9 @@
 //
-//  APPChildViewController.h
-//  PageApp
+//  AppDelegate.h
+//  ABCTabBarController
 //
-//  Created by Rafael Garcia Leiva on 10/06/13.
-//  Copyright (c) 2013 Appcoda. All rights reserved.
+//  Created by Adam Cooper on 8/29/15.
+//  Copyright (c) 2015 Adam Cooper. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

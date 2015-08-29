@@ -18,13 +18,11 @@
 - (instancetype)initWithTabBar:(ABCTabBar *)bar {
     if (self = [super init]) {
         _tabBar = bar;
-        _tabs = [NSMutableArray array];
         self.indicatorView = [[UIView alloc]initWithFrame:CGRectMake(0, kMDTabBarHeight - kMDIndicatorHeight, 0,kMDIndicatorHeight)];
         self.indicatorView.tag = NSIntegerMax;
         [self addSubview:self.indicatorView];
-        [self addTarget:self
-                 action:@selector(selectionChanged:)
-       forControlEvents:UIControlEventValueChanged];    }
+        [self addTarget:self action:@selector(selectionChanged:) forControlEvents:UIControlEventValueChanged];
+    }
     
     return self;
 }
@@ -49,21 +47,19 @@
     [self.tabBar updateSelectedIndex:self.selectedSegmentIndex];
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary *)change
-                       context:(void *)context {
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    
     if (object == self.superview && [keyPath isEqualToString:@"frame"]) {
         [self resizeItems];
         [self moveIndicatorToSelectedIndexWithAnimated:NO];
     }
+    
 }
 
 #pragma mark Override Methods
 
-- (void)insertSegmentWithImage:(UIImage *)image
-                       atIndex:(NSUInteger)segment
-                      animated:(BOOL)animated {
+- (void)insertSegmentWithImage:(UIImage *)image atIndex:(NSUInteger)segment animated:(BOOL)animated {
+    
     [super insertSegmentWithImage:image atIndex:segment animated:animated];
     [self resizeItems];
     [self updateSegmentsList];
@@ -73,9 +69,7 @@
                afterDelay:.001f];
 }
 
-- (void)insertSegmentWithTitle:(NSString *)title
-                       atIndex:(NSUInteger)segment
-                      animated:(BOOL)animated {
+- (void)insertSegmentWithTitle:(NSString *)title atIndex:(NSUInteger)segment animated:(BOOL)animated {
     [super insertSegmentWithTitle:title atIndex:segment animated:animated];
     [self resizeItems];
     [self updateSegmentsList];
@@ -110,7 +104,7 @@
                afterDelay:.001f];
 }
 
-#pragma mark Setter
+#pragma mark - Setters
 - (void)setIndicatorColor:(UIColor *)color {
     _indicatorColor = color;
     [self.indicatorView setBackgroundColor:color];
@@ -121,16 +115,14 @@
     for (UIView *view in self.subviews) {
         for (CALayer *layer in view.layer.sublayers) {
             if ([layer isKindOfClass:[MDRippleLayer class]]) {
-                [((MDRippleLayer *)layer)setEffectColor:_rippleColor
-                                        withRippleAlpha:.1f
-                                        backgroundAlpha:.1f];
+                [((MDRippleLayer *)layer)setEffectColor:_rippleColor withRippleAlpha:.1f backgroundAlpha:.1f];
                 return;
             }
         }
     }
 }
 
-#pragma mark Public Methods
+#pragma mark - Public Methods
 
 - (CGRect)getSelectedSegmentFrame {
     if (self.selectedSegmentIndex >= 0) {
@@ -191,27 +183,22 @@
 }
 
 - (NSArray *)getSegmentList {
-    // WARNING: This function gets frame from UISegment objects, undocumented
-    // subviews of UISegmentedControl.
-    // May break in iOS updates.
     
-    NSMutableArray *segments =
-    [NSMutableArray arrayWithCapacity:self.numberOfSegments];
+    NSMutableArray *segments = [NSMutableArray arrayWithCapacity:self.numberOfSegments];
     for (UIView *view in self.subviews) {
         if ([NSStringFromClass([view class]) isEqualToString:@"UISegment"]) {
             [segments addObject:view];
         }
     }
     
-    NSArray *sortedSegments = [segments
-                               sortedArrayUsingComparator:^NSComparisonResult(UIView *a, UIView *b) {
-                                   if (a.frame.origin.x < b.frame.origin.x) {
-                                       return NSOrderedAscending;
-                                   } else if (a.frame.origin.x > b.frame.origin.x) {
-                                       return NSOrderedDescending;
-                                   }
-                                   return NSOrderedSame;
-                               }];
+    NSArray *sortedSegments = [segments sortedArrayUsingComparator:^NSComparisonResult(UIView *a, UIView *b) {
+        if (a.frame.origin.x < b.frame.origin.x) {
+            return NSOrderedAscending;
+        } else if (a.frame.origin.x > b.frame.origin.x) {
+            return NSOrderedDescending;
+        }
+        return NSOrderedSame;
+    }];
     
     return sortedSegments;
 }
@@ -308,6 +295,15 @@
 
 - (void)dealloc {
     [self removeObserver:self forKeyPath:@"bounds"];
+}
+
+#pragma mark - Lazy Instantiation 
+
+-(NSMutableArray *)tabs {
+    if (!_tabs) {
+        _tabs = [NSMutableArray array];
+    }
+    return _tabs;
 }
 
 @end

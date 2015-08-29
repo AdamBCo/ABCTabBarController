@@ -22,7 +22,7 @@
 // THE SOFTWARE.
 
 #import "ABCTabBarController.h"
-#import "APPChildViewController.h"
+#import "ExampleViewController.h"
 
 @interface ABCTabBarController () <ABCTabBarDelegate, UIPageViewControllerDelegate, UIPageViewControllerDataSource, UIScrollViewDelegate>
 
@@ -256,19 +256,19 @@
 -(NSArray *)viewControllers {
     if (!_viewControllers) {
         
-        APPChildViewController *childViewControllerOne = [[APPChildViewController alloc] init];
+        ExampleViewController *childViewControllerOne = [[ExampleViewController alloc] init];
         [childViewControllerOne setIndex:1];
         UINavigationController *navigationOne = [[UINavigationController alloc] initWithRootViewController:childViewControllerOne];
         
-        APPChildViewController *childViewControllerTwo = [[APPChildViewController alloc] init];
+        ExampleViewController *childViewControllerTwo = [[ExampleViewController alloc] init];
         [childViewControllerTwo setIndex:2];
         UINavigationController *navigationTwo = [[UINavigationController alloc] initWithRootViewController:childViewControllerTwo];
 
         
-        APPChildViewController *childViewControllerThree = [[APPChildViewController alloc] init];
+        ExampleViewController *childViewControllerThree = [[ExampleViewController alloc] init];
         [childViewControllerThree setIndex:3];
         
-        APPChildViewController *childViewControllerFour = [[APPChildViewController alloc] init];
+        ExampleViewController *childViewControllerFour = [[ExampleViewController alloc] init];
         [childViewControllerFour setIndex:4];
         UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:childViewControllerFour];
 
@@ -278,7 +278,7 @@
     return _viewControllers;
 }
 
-- (APPChildViewController *)viewControllerAtIndex:(NSUInteger)index {
+- (ExampleViewController *)viewControllerAtIndex:(NSUInteger)index {
     
 //    APPChildViewController *childViewController = [[APPChildViewController alloc]init];
 //    childViewController.index = index;

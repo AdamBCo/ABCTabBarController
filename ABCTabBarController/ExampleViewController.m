@@ -1,18 +1,18 @@
 //
-//  AppDelegate.h
+//  ExampleViewController.m
 //  ABCTabBarController
 //
 //  Created by Adam Cooper on 8/29/15.
 //  Copyright (c) 2015 Adam Cooper. All rights reserved.
 //
 
-#import "APPChildViewController.h"
+#import "ExampleViewController.h"
 
-@interface APPChildViewController ()
+@interface ExampleViewController ()
 
 @end
 
-@implementation APPChildViewController
+@implementation ExampleViewController
 
 - (void)viewDidLoad {
     

@@ -1,5 +1,5 @@
 //
-//  AppDelegate.h
+//  ExampleViewController.h
 //  ABCTabBarController
 //
 //  Created by Adam Cooper on 8/29/15.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface APPChildViewController : UIViewController
+@interface ExampleViewController : UIViewController
 
 @property (assign, nonatomic) NSInteger index;
 @property (strong, nonatomic) UILabel *screenNumber;

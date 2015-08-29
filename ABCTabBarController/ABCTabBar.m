@@ -20,7 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#import "MDTabBar.h"
+#import "ABCTabBar.h"
 #import "MDRippleLayer.h"
 #import <uiKit/UISegmentedControl.h>
 #import <Foundation/Foundation.h>
@@ -30,9 +30,7 @@
 #define kMDContentHorizontalPaddingIPhone 12
 #define kMDTabBarHorizontalInset 8
 
-#define DISABLED_TEXT_ALPHA .6
-
-@interface MDTabBar ()
+@interface ABCTabBar ()
 
 @property (nonatomic, strong) ABCSegmentedControl *segmentedControl;
 @property (nonatomic, strong) UIScrollView *scrollView;
@@ -42,7 +40,7 @@
 @end
 
 #pragma mark MDTabBar
-@implementation MDTabBar
+@implementation ABCTabBar
 
 - (instancetype)init {
   if (self = [super init]) {
@@ -86,13 +84,6 @@
 - (void)initContent {
   self.segmentedControl = [[ABCSegmentedControl alloc] initWithTabBar:self];
   [self.segmentedControl setTintColor:[UIColor clearColor]];
-
-  self.scrollView = [[UIScrollView alloc] init];
-  [self.scrollView setShowsHorizontalScrollIndicator:NO];
-  [self.scrollView setShowsVerticalScrollIndicator:NO];
-  self.scrollView.bounces = NO;
-
-  [self.scrollView addSubview:self.segmentedControl];
 
   [self addSubview:self.scrollView];
 
@@ -246,5 +237,19 @@
 - (NSMutableArray *)tabs {
   return self.segmentedControl.tabs;
 }
+
+#pragma mark - Lazy Instantiation
+
+-(UIScrollView *)scrollView {
+    if (!_scrollView) {
+        _scrollView = [[UIScrollView alloc] init];
+        [_scrollView setShowsHorizontalScrollIndicator:NO];
+        [_scrollView setShowsVerticalScrollIndicator:NO];
+        [_scrollView setBounces:NO];
+        [_scrollView addSubview:self.segmentedControl];
+    }
+    return _scrollView;
+}
+
 
 @end

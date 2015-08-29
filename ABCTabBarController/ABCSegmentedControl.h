@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class MDTabBar;
+@class ABCTabBar;
 
 @interface ABCSegmentedControl : UISegmentedControl
 
@@ -16,11 +16,11 @@
 @property(nonatomic) UIColor *rippleColor;
 @property(nonatomic) UIColor *indicatorColor;
 @property(nonatomic) NSMutableArray *tabs;
-@property(strong, nonatomic) MDTabBar *tabBar;
+@property(strong, nonatomic) ABCTabBar *tabBar;
 
 - (CGRect)getSelectedSegmentFrame;
 - (void)setTextFont:(UIFont *)textFont withColor:(UIColor *)textColor;
 - (void)moveIndicatorToFrame:(CGRect)frame withAnimated:(BOOL)animated;
-- (instancetype)initWithTabBar:(MDTabBar *)bar ;
+- (instancetype)initWithTabBar:(ABCTabBar *)bar ;
 
 @end

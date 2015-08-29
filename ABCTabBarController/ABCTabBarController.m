@@ -126,7 +126,7 @@
 
 
 #pragma mark - MDTabBar Delegate
-- (void)tabBar:(MDTabBar *)tabBar didChangeSelectedIndex:(NSUInteger)selectedIndex {
+- (void)tabBar:(ABCTabBar *)tabBar didChangeSelectedIndex:(NSUInteger)selectedIndex {
     
     NSLog(@"INDEX: %lu",(unsigned long)selectedIndex);
     
@@ -205,9 +205,9 @@
 }
 
 
--(MDTabBar *)tabBar {
+-(ABCTabBar *)tabBar {
     if (!_tabBar) {
-        _tabBar = [[MDTabBar alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 48, [UIScreen mainScreen].applicationFrame.size.width, 40)];
+        _tabBar = [[ABCTabBar alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 48, [UIScreen mainScreen].applicationFrame.size.width, 40)];
         [_tabBar setBackgroundColor:[UIColor blueColor]];
         
         NSArray *names = @[

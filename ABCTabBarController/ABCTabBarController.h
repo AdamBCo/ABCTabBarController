@@ -21,7 +21,7 @@
 // THE SOFTWARE.
 
 #import <UIKit/UIKit.h>
-#import "MDTabBar.h"
+#import "ABCTabBar.h"
 
 @class ABCTabBarController;
 
@@ -34,7 +34,7 @@
 
 @interface ABCTabBarController : UIViewController
 
-@property(nonatomic, strong) MDTabBar *tabBar;
+@property(nonatomic, strong) ABCTabBar *tabBar;
 @property(nonatomic, weak) id<ABCTabBarControllerDelegate> delegate;
 
 - (void)setItems:(NSArray *)items;

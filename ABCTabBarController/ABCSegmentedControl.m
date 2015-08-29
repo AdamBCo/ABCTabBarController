@@ -8,14 +8,14 @@
 
 #import "ABCSegmentedControl.h"
 #import "MDRippleLayer.h"
-#import "MDTabBar.h"
+#import "ABCTabBar.h"
 
 @implementation ABCSegmentedControl {
     UIView *beingTouchedView;
     UIFont *font;
 }
 
-- (instancetype)initWithTabBar:(MDTabBar *)bar {
+- (instancetype)initWithTabBar:(ABCTabBar *)bar {
     if (self = [super init]) {
         _tabBar = bar;
         _tabs = [NSMutableArray array];

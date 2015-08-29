@@ -25,15 +25,15 @@
 #define kMDTabBarHeight 48
 #define kMDIndicatorHeight 2
 
-@class MDTabBar;
+@class ABCTabBar;
 
 @protocol MDTabBarDelegate <NSObject>
-- (void)tabBar:(MDTabBar *)tabBar
+- (void)tabBar:(ABCTabBar *)tabBar
     didChangeSelectedIndex:(NSUInteger)selectedIndex;
 
 @end
 
-@interface MDTabBar : UIControl
+@interface ABCTabBar : UIControl
 
 @property(nonatomic) UIColor *textColor;
 @property(nonatomic) UIColor *backgroundColor;

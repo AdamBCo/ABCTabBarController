@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "ABCTabBarController.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +18,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    ABCTabBarController *tabBar = [[ABCTabBarController alloc] init];
+    [self.window setRootViewController:tabBar];
+    
     return YES;
 }
 

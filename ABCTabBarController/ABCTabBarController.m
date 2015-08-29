@@ -32,7 +32,6 @@
 @end
 
 @implementation ABCTabBarController {
-//  NSMutableDictionary *viewControllers;
   NSUInteger lastIndex;
   BOOL disableDragging;
 }
@@ -43,15 +42,11 @@
   [self.view addSubview:self.pageController.view];
   [self.view addSubview:self.tabBar];
     
+    NSArray *viewControllers = [NSArray arrayWithObject:[self.viewControllers objectAtIndex:0]];
     
-    APPChildViewController *initialViewController = [self.viewControllers objectAtIndex:0];
-    
-    NSArray *viewControllers = [NSArray arrayWithObject:initialViewController];
-    
-            [self.pageController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
-    
-            [self addChildViewController:self.pageController];
-            [self.pageController didMoveToParentViewController:self];
+    [self.pageController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+    [self addChildViewController:self.pageController];
+    [self.pageController didMoveToParentViewController:self];
 
 //  // first view controller
 //  id viewController =
@@ -84,7 +79,7 @@
 
 #pragma Public functions
 - (void)setItems:(NSArray *)items {
-  [_tabBar setItems:items];
+  [self.tabBar setItems:items];
 }
 
 #pragma PageViewControllerDataSource
@@ -213,7 +208,7 @@
 -(MDTabBar *)tabBar {
     if (!_tabBar) {
         _tabBar = [[MDTabBar alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 48, [UIScreen mainScreen].applicationFrame.size.width, 40)];
-        [_tabBar setBackgroundColor:[UIColor yellowColor]];
+        [_tabBar setBackgroundColor:[UIColor blueColor]];
         
         NSArray *names = @[
                            @"HOME",

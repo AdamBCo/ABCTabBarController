@@ -23,22 +23,30 @@
 
 #import "ABCTabBarController.h"
 #import "ExampleViewController.h"
+#import "NewTabBar.h"
+#import "UIView+Frame.h"
 
-@interface ABCTabBarController () <ABCTabBarDelegate, UIPageViewControllerDelegate, UIPageViewControllerDataSource, UIScrollViewDelegate>
+@interface ABCTabBarController () <UIPageViewControllerDelegate, UIPageViewControllerDataSource, UIScrollViewDelegate, ABCTabBarDelegate>
 
 @property (nonatomic, strong) UIPageViewController *pageController;
 @property (nonatomic, strong) NSArray *viewControllers;
 @property (nonatomic, strong) UIViewController *currentViewController;
+@property (nonatomic, strong) NewTabBar *tabBar;
+
+@property (nonatomic, assign) CGFloat lastContentOffset;
+
 
 @end
 
 @implementation ABCTabBarController {
-  NSUInteger lastIndex;
-  BOOL disableDragging;
+    NSUInteger _lastIndex;
+    BOOL disableDragging;
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+    
+    self.lastContentOffset = 0;
 
   [self.view addSubview:self.pageController.view];
   [self.view addSubview:self.tabBar];
@@ -48,27 +56,6 @@
     [self.pageController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
     [self addChildViewController:self.pageController];
     [self.pageController didMoveToParentViewController:self];
-
-//  // first view controller
-//  id viewController =[self.delegate tabBarViewController:self viewControllerAtIndex:self.tabBar.selectedIndex];
-////  [self.viewControllers
-////      setObject:viewController
-////         forKey:[NSNumber numberWithInteger:self.tabBar.selectedIndex]];
-//
-//  __unsafe_unretained typeof(self) weakSelf = self;
-//  [self.pageController
-//      setViewControllers:viewControllers
-//               direction:UIPageViewControllerNavigationDirectionForward
-//                animated:NO
-//              completion:^(BOOL finished) {
-//                if ([weakSelf->_delegate
-//                        respondsToSelector:@selector(tabBarViewController:
-//                                                           didMoveToIndex:)]) {
-//                  [weakSelf->_delegate
-//                      tabBarViewController:weakSelf
-//                            didMoveToIndex:weakSelf->_tabBar.selectedIndex];
-//                }
-//              }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -78,7 +65,7 @@
 
 #pragma Public functions
 - (void)setItems:(NSArray *)items {
-  [self.tabBar setItems:items];
+//  [self.tabBar setItems:items];
 }
 
 #pragma PageViewControllerDataSource
@@ -117,36 +104,113 @@
 
 -(void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed {
     
-    
     NSUInteger index = [self.viewControllers indexOfObject: [pageViewController.viewControllers lastObject]];
-    [self.tabBar setSelectedIndex:index];
     
-    // call delegate
-    if ([self.delegate
-         respondsToSelector:@selector(tabBarViewController:didMoveToIndex:)]) {
-        [self.delegate tabBarViewController:self
-                             didMoveToIndex:_tabBar.selectedIndex];
-    }
+    NSLog(@"INDEX: %lu",(unsigned long)index);
 
+    disableDragging = YES;
+    [UIView animateWithDuration:.2f
+                     animations:^{
+                         self.tabBar.indicatorView.left = self.view.width/3 * index;
+                     }completion:^(BOOL finished) {
+                         self.lastContentOffset = self.tabBar.indicatorView.left;
+                         self.tabBar.selectedIndex = @(index).intValue;
+                         disableDragging = NO;
+                     }];
 }
 
 
-#pragma mark - MDTabBar Delegate
-- (void)tabBar:(ABCTabBar *)tabBar didChangeSelectedIndex:(NSUInteger)selectedIndex {
 
-  UIViewController *viewController = [self.viewControllers objectAtIndex:selectedIndex];
+
+
+#pragma mark - ScrollView Delegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
+    float xDriff = scrollView.contentOffset.x - scrollView.width;
+    
+    if (!disableDragging) {
+
+        switch (scrollView.panGestureRecognizer.state) {
+                
+            case UIGestureRecognizerStateBegan:
+                
+                // User began dragging
+                break;
+                
+            case UIGestureRecognizerStateChanged: {
+                
+                
+                if (scrollView.contentOffset.x < scrollView.width) {
+                    
+                    if (self.tabBar.selectedIndex == 0) {
+                        return;
+                    }
+                    
+                    if (self.tabBar.indicatorView.left <= 0) {
+                        return;
+                    }
+                    
+                    self.tabBar.indicatorView.left = (self.view.width/3 * self.tabBar.selectedIndex) + xDriff / scrollView.width * (scrollView.width/3);
+                } else {
+                 
+                    if (self.tabBar.selectedIndex >= 2) {
+                        return;
+                    }
+                    
+                    if (self.tabBar.indicatorView.right >= self.view.width) {
+                        return;
+                    }
+                    
+                    self.tabBar.indicatorView.left = (self.view.width/3 * self.tabBar.selectedIndex) + xDriff / scrollView.width * (scrollView.width/3);
+
+                }
+
+                
+            }
+                
+                
+                break;
+                
+            case UIGestureRecognizerStatePossible:
+                
+                self.tabBar.indicatorView.left = (self.view.width/3 * self.tabBar.selectedIndex) + xDriff / scrollView.width * (scrollView.width/3);
+
+                break;
+                
+            default:
+                break;
+        }
+    }
+}
+
+
+-(NewTabBar *)tabBar {
+    if (!_tabBar) {
+        _tabBar = [[NewTabBar alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 48, [UIScreen mainScreen].applicationFrame.size.width, 48)];
+        [_tabBar setDelegate:self];
+        [_tabBar setTabBarDelegate:self];
+    }
+    return _tabBar;
+}
+
+#pragma mark - ABCTabBar Delegate Methods
+
+-(void)tabBar:(NewTabBar *)tabBar pressedForIndex:(int)index {
+    
+    UIViewController *viewController = [self.viewControllers objectAtIndex:index];
     
     if (!viewController) {
-        viewController = [self.delegate tabBarViewController:self viewControllerAtIndex:selectedIndex];
+        viewController = [self.delegate tabBarViewController:self viewControllerAtIndex:index];
     }
     
-    UIPageViewControllerNavigationDirection animateDirection;
+            UIPageViewControllerNavigationDirection animateDirection;
     
-    if (selectedIndex > lastIndex) {
-        animateDirection = UIPageViewControllerNavigationDirectionForward;
-    } else {
-        animateDirection = UIPageViewControllerNavigationDirectionReverse;
-    }
+            if (index > _lastIndex) {
+                animateDirection = UIPageViewControllerNavigationDirectionForward;
+            } else {
+                animateDirection = UIPageViewControllerNavigationDirectionReverse;
+            }
     
     __unsafe_unretained typeof(self) weakSelf = self;
     disableDragging = YES;
@@ -157,83 +221,15 @@
                                  completion:^(BOOL finished) {
                                      [weakSelf.pageController.view setUserInteractionEnabled:YES];
                                      weakSelf->disableDragging = NO;
-                                     weakSelf->lastIndex = selectedIndex;
+                                      weakSelf->_lastIndex = index;
                                      
                                      if ([weakSelf->_delegate respondsToSelector:@selector(tabBarViewController:didMoveToIndex:)]) {
-                                         [weakSelf->_delegate tabBarViewController:weakSelf didMoveToIndex:selectedIndex];
+                                         [weakSelf->_delegate tabBarViewController:weakSelf didMoveToIndex:index];
                                      }
                                  }];
     
 }
 
-#pragma mark - ScrollView Delegate
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-
-  CGPoint offset = scrollView.contentOffset;
-
-  CGFloat scrollViewWidth = scrollView.frame.size.width;
-
-  int selectedIndex = (int)_tabBar.selectedIndex;
-
-  if (!disableDragging) {
-    float xDriff = offset.x - scrollViewWidth;
-    UIView *selectedTab = (UIView *)[_tabBar tabs][selectedIndex];
-
-      
-      float widthDiff;
-      float newOriginX;
-      float newWidth;
-            
-      
-    if (offset.x < scrollViewWidth) {
-      if (self.tabBar.selectedIndex == 0)
-        return;
-
-      UIView *leftTab = (UIView *)[self.tabBar tabs][selectedIndex - 1];
-
-      widthDiff = selectedTab.frame.size.width - leftTab.frame.size.width;
-
-      newOriginX = selectedTab.frame.origin.x +
-                         xDriff / scrollViewWidth * leftTab.frame.size.width;
-
-      newWidth = selectedTab.frame.size.width + xDriff / scrollViewWidth * widthDiff;
-    }
-    else {
-      if (selectedIndex + 1 >= _tabBar.numberOfItems)
-        return;
-
-      UIView *rightTab = (UIView *)[self.tabBar tabs][selectedIndex + 1];
-
-    widthDiff = rightTab.frame.size.width - selectedTab.frame.size.width;
-
-    newOriginX = selectedTab.frame.origin.x + xDriff / scrollViewWidth * selectedTab.frame.size.width;
-
-    newWidth = selectedTab.frame.size.width + xDriff / scrollViewWidth * widthDiff;
-    }
-      
-      CGRect frame = CGRectMake(newOriginX, kMDTabBarHeight - kMDIndicatorHeight, newWidth, kMDIndicatorHeight);
-      [self.tabBar moveIndicatorToFrame:frame withAnimated:NO];
-  }
-}
-
-
--(ABCTabBar *)tabBar {
-    if (!_tabBar) {
-        _tabBar = [[ABCTabBar alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 48, [UIScreen mainScreen].applicationFrame.size.width, 40)];
-        [_tabBar setBackgroundColor:[UIColor blueColor]];
-        
-        NSArray *names = @[
-                           @"ONE",
-                           @"TWO",
-                           @"THREE",
-                           @"FOUR"
-                           ];
-        [_tabBar setItems:names];
-        [_tabBar setDelegate:self];
-    }
-    return _tabBar;
-}
 
 -(UIPageViewController *)pageController {
     if (!_pageController) {
@@ -259,24 +255,17 @@
         ExampleViewController *childViewControllerOne = [[ExampleViewController alloc] init];
         [childViewControllerOne setIndex:1];
         UINavigationController *navigationOne = [[UINavigationController alloc] initWithRootViewController:childViewControllerOne];
-        [navigationOne.navigationBar setBarTintColor:[UIColor redColor]];
+        [navigationOne.navigationBar setBarTintColor:[UIColor blackColor]];
         
         ExampleViewController *childViewControllerTwo = [[ExampleViewController alloc] init];
         [childViewControllerTwo setIndex:2];
         UINavigationController *navigationTwo = [[UINavigationController alloc] initWithRootViewController:childViewControllerTwo];
-        [navigationTwo.navigationBar setBarTintColor:[UIColor greenColor]];
-
-
+        [navigationTwo.navigationBar setBarTintColor:[UIColor blackColor]];
         
         ExampleViewController *childViewControllerThree = [[ExampleViewController alloc] init];
         [childViewControllerThree setIndex:3];
-        
-        ExampleViewController *childViewControllerFour = [[ExampleViewController alloc] init];
-        [childViewControllerFour setIndex:4];
-        UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:childViewControllerFour];
 
-
-        _viewControllers = @[navigationOne, navigationTwo, childViewControllerThree, navigation];
+        _viewControllers = @[navigationOne, navigationTwo, childViewControllerThree];
     }
     return _viewControllers;
 }

@@ -23,7 +23,7 @@
 
 #import "ABCTabBarController.h"
 #import "ExampleViewController.h"
-#import "NewTabBar.h"
+#import "ABCTabBar.h"
 #import "UIView+Frame.h"
 
 @interface ABCTabBarController () <UIPageViewControllerDelegate, UIPageViewControllerDataSource, UIScrollViewDelegate, ABCTabBarDelegate>
@@ -31,7 +31,7 @@
 @property (nonatomic, strong) UIPageViewController *pageController;
 @property (nonatomic, strong) NSArray *viewControllers;
 @property (nonatomic, strong) UIViewController *currentViewController;
-@property (nonatomic, strong) NewTabBar *tabBar;
+@property (nonatomic, strong) ABCTabBar *tabBar;
 
 @property (nonatomic, assign) CGFloat lastContentOffset;
 
@@ -105,18 +105,8 @@
 -(void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed {
     
     NSUInteger index = [self.viewControllers indexOfObject: [pageViewController.viewControllers lastObject]];
-    
-    NSLog(@"INDEX: %lu",(unsigned long)index);
-
-    disableDragging = YES;
-    [UIView animateWithDuration:.2f
-                     animations:^{
-                         self.tabBar.indicatorView.left = self.view.width/3 * index;
-                     }completion:^(BOOL finished) {
-                         self.lastContentOffset = self.tabBar.indicatorView.left;
-                         self.tabBar.selectedIndex = @(index).intValue;
-                         disableDragging = NO;
-                     }];
+     self.lastContentOffset = self.tabBar.indicatorView.left;
+     self.tabBar.selectedIndex = @(index).intValue;
 }
 
 
@@ -185,9 +175,9 @@
 }
 
 
--(NewTabBar *)tabBar {
+-(ABCTabBar *)tabBar {
     if (!_tabBar) {
-        _tabBar = [[NewTabBar alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 48, [UIScreen mainScreen].applicationFrame.size.width, 48)];
+        _tabBar = [[ABCTabBar alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 48, [UIScreen mainScreen].applicationFrame.size.width, 48)];
         [_tabBar setDelegate:self];
         [_tabBar setTabBarDelegate:self];
     }
@@ -196,7 +186,7 @@
 
 #pragma mark - ABCTabBar Delegate Methods
 
--(void)tabBar:(NewTabBar *)tabBar pressedForIndex:(int)index {
+-(void)tabBar:(ABCTabBar *)tabBar pressedForIndex:(int)index {
     
     UIViewController *viewController = [self.viewControllers objectAtIndex:index];
     

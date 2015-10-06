@@ -6,15 +6,15 @@
 //  Copyright © 2015 Adam Cooper. All rights reserved.
 //
 
-#import "NewTabBar.h"
+#import "ABCTabBar.h"
 #import "UIView+Frame.h"
 
-@interface NewTabBar ()
+@interface ABCTabBar ()
 
 
 @end
 
-@implementation NewTabBar
+@implementation ABCTabBar
 
 - (instancetype)initWithFrame:(CGRect)frame
 {

@@ -14,9 +14,8 @@
 		873CAE811B92136F0068E7E8 /* ABCTabBarControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 873CAE801B92136F0068E7E8 /* ABCTabBarControllerTests.m */; };
 		873CAEA11B9214130068E7E8 /* ABCTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 873CAE8D1B9214130068E7E8 /* ABCTabBarController.m */; };
 		873CAEA21B9214130068E7E8 /* ExampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 873CAE8F1B9214130068E7E8 /* ExampleViewController.m */; };
-		87E275C21BB858F6007B8ED7 /* NewTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E275C11BB858F6007B8ED7 /* NewTabBar.m */; settings = {ASSET_TAGS = (); }; };
+		87E275C21BB858F6007B8ED7 /* ABCTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E275C11BB858F6007B8ED7 /* ABCTabBar.m */; settings = {ASSET_TAGS = (); }; };
 		87E275C51BB85BB7007B8ED7 /* UIView+Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E275C41BB85BB7007B8ED7 /* UIView+Frame.m */; settings = {ASSET_TAGS = (); }; };
-		87E275C71BB85D49007B8ED7 /* ABCSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 87E275C61BB85D49007B8ED7 /* ABCSegmentedControl.m */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,11 +43,10 @@
 		873CAE8D1B9214130068E7E8 /* ABCTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABCTabBarController.m; sourceTree = "<group>"; };
 		873CAE8E1B9214130068E7E8 /* ExampleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExampleViewController.h; sourceTree = "<group>"; };
 		873CAE8F1B9214130068E7E8 /* ExampleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExampleViewController.m; sourceTree = "<group>"; };
-		87E275C01BB858F6007B8ED7 /* NewTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewTabBar.h; sourceTree = "<group>"; };
-		87E275C11BB858F6007B8ED7 /* NewTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewTabBar.m; sourceTree = "<group>"; };
+		87E275C01BB858F6007B8ED7 /* ABCTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABCTabBar.h; sourceTree = "<group>"; };
+		87E275C11BB858F6007B8ED7 /* ABCTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABCTabBar.m; sourceTree = "<group>"; };
 		87E275C31BB85BB7007B8ED7 /* UIView+Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Frame.h"; sourceTree = "<group>"; };
 		87E275C41BB85BB7007B8ED7 /* UIView+Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Frame.m"; sourceTree = "<group>"; };
-		87E275C61BB85D49007B8ED7 /* ABCSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABCSegmentedControl.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,7 +90,6 @@
 			children = (
 				873CAE681B92136F0068E7E8 /* AppDelegate.h */,
 				873CAE691B92136F0068E7E8 /* AppDelegate.m */,
-				87E275C61BB85D49007B8ED7 /* ABCSegmentedControl.m */,
 				87E275C31BB85BB7007B8ED7 /* UIView+Frame.h */,
 				87E275C41BB85BB7007B8ED7 /* UIView+Frame.m */,
 				873CAEB21B925D5D0068E7E8 /* Classes */,
@@ -134,8 +131,8 @@
 			children = (
 				873CAE8A1B9214130068E7E8 /* ABCTabBarController.h */,
 				873CAE8D1B9214130068E7E8 /* ABCTabBarController.m */,
-				87E275C01BB858F6007B8ED7 /* NewTabBar.h */,
-				87E275C11BB858F6007B8ED7 /* NewTabBar.m */,
+				87E275C01BB858F6007B8ED7 /* ABCTabBar.h */,
+				87E275C11BB858F6007B8ED7 /* ABCTabBar.m */,
 				873CAE8E1B9214130068E7E8 /* ExampleViewController.h */,
 				873CAE8F1B9214130068E7E8 /* ExampleViewController.m */,
 			);
@@ -243,10 +240,9 @@
 			files = (
 				873CAEA11B9214130068E7E8 /* ABCTabBarController.m in Sources */,
 				873CAE6A1B92136F0068E7E8 /* AppDelegate.m in Sources */,
-				87E275C71BB85D49007B8ED7 /* ABCSegmentedControl.m in Sources */,
 				87E275C51BB85BB7007B8ED7 /* UIView+Frame.m in Sources */,
 				873CAE671B92136F0068E7E8 /* main.m in Sources */,
-				87E275C21BB858F6007B8ED7 /* NewTabBar.m in Sources */,
+				87E275C21BB858F6007B8ED7 /* ABCTabBar.m in Sources */,
 				873CAEA21B9214130068E7E8 /* ExampleViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

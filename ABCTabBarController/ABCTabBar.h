@@ -7,16 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
-@class NewTabBar;
+@class ABCTabBar;
 
 @protocol ABCTabBarDelegate <NSObject>
 
--(void)tabBar:(NewTabBar *)tabBar pressedForIndex:(int)index;
+-(void)tabBar:(ABCTabBar *)tabBar pressedForIndex:(int)index;
 
 
 @end
 
-@interface NewTabBar : UIScrollView
+@interface ABCTabBar : UIScrollView
 
 @property (nonatomic, strong) UIButton *buttonOne;
 @property (nonatomic, strong) UIButton *buttonTwo;

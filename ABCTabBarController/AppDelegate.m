@@ -25,7 +25,10 @@
     
     
     ABCTabBarController *tabBar = [[ABCTabBarController alloc] init];
+    
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [self.window setRootViewController:tabBar];
+    [self.window makeKeyAndVisible];
     
     return YES;
 }
